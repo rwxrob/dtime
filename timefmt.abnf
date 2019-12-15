@@ -24,8 +24,8 @@ weekday-time   = weekday time                   ; jan2,304p
 
 time           = hour / hour-ampm / hour-min / hour-min-ampm
 
-month-name     = "jan" / "feb" / "mar" / "apr" / "may" / "jun" /
-                "jul" / "aug" / "sep" / "oct" / "nov" / "dec"
+month-name     = "jan" / "feb" / "mar" / "apr" / "may" / "jun" 
+               / "jul" / "aug" / "sep" / "oct" / "nov" / "dec"
 
 month-day      = month-name day-of-month        ; jan2
 
