@@ -1,0 +1,61 @@
+timefmt        = datetime / datetime-adj
+
+datetime       = "now"                ; (right now)
+               / weekday              ; mon
+               / weekday-time         ; mon15 / mon1504/ mon304p
+               / month-name           ; jan
+               / month-day            ; jan2
+               / month-day-time       ; jan2,15 / jan2,1504 / jan2,304p
+               / year                 ; 2006
+               / year month           ; 2006jan
+               / year month-day       ; 2006jan2
+               / year month-day-time  ; 2006jan2,15  ^^^ 
+
+datetime-adj   = datetime adjust      ; 2006jan2,15+2w
+
+adjust         = NINE *20DIGIT ("-" / "+") ; +2w / -7d / -1y
+               / ("m" / "h" / "d" / "w" / "y")
+
+timefmt-tz     = timefmt timezone     ; 2006jan2,15-07
+
+weekday        = "mon" / "tue" / "wed" / "thu" / "fri" / "sat" / "sun"
+
+weekday-time   = weekday time                   ; jan2,304p
+
+time           = hour / hour-ampm / hour-min / hour-min-ampm
+
+month-name     = "jan" / "feb" / "mar" / "apr" / "may" / "jun" /
+                "jul" / "aug" / "sep" / "oct" / "nov" / "dec"
+
+month-day      = month-name day-of-month        ; jan2
+
+month-day-time = month-day "," time             ; jan2,15
+
+day-of-month   = NINE                           ; 1-9 
+               / (("1" / "2") DIGIT)            ; 10 - 29
+               / ("3" ("0","1"))                ; 30 - 31
+
+year           = 4DIGIT                         ; 2006
+
+hour-min       = hour min
+
+hour           = ("0" NINE)                     ; 01 - 09
+               / ("1" DIGIT)                    ; 11 - 19
+               / ("2" ("0" / "1" / "2" / "3"))  ; 20 - 23
+
+minute         = ("0" NINE)                     ; 01 - 09
+               / (FIVE DIGIT)                   ; 11 - 59
+
+hour-ampm      = TWELVE ("a" / "p")
+
+hour-min-ampm  = TWELVE ("a" / "p")
+ 
+timezone       = (("-" / "+") 2DIGIT)           ; -07
+               / "Z"                            ; Z
+
+TWELVE         = NINE / ("1" ("0" / "1" / "2"))
+
+NINE           = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
+
+FIVE           = "1" / "2" / "3" / "4" / "5"
+
