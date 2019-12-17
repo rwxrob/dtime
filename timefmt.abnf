@@ -1,43 +1,41 @@
 ; TimeFmt Specification v1.0.0
+; All times assumed to be local (no timezone support).
 
 timefmt        = datetime / datetime-adj
 
-; datetime also specifies the order of priority resolution
+datetime-adj   = datetime adjust       ; 2006jan2,15+2w
+
 datetime       = "now"
                / weekday               ; mon
                / month                 ; jan
-               / year                  ; 2006
                / time                  ; 3p 304p 15 1504
-               / weekday-time          ; mon15 / mon1504/ mon304p
+               / time-weekday          ; 15,mon / 1504,mon / 304p,mon
                / month-day             ; jan2
-               / month-day-time        ; jan2,15 / jan2,1504 / jan2,304p
-               / (year month)          ; 2006jan
-               / (year month-day)      ; 2006jan2
-               / (year month-day-time) ; 2006jan2,15  ^^^ 
+               / time-month-day        ; 15,jan2 / 1504,jan2 / 304p,jan2
+               / year                  ; ,2006
+               / month-year            ; jan,2006
+               / month-day-year        ; jan2,2006
+               / time-month-day-year   ; 15,jan2,2006 / 304p,jan2,2006
 
 weekday        = "mon" / "tue" / "wed" / "thu" / "fri" / "sat" / "sun"
 
 month          = "jan" / "feb" / "mar" / "apr" / "may" / "jun" 
                / "jul" / "aug" / "sep" / "oct" / "nov" / "dec"
 
-year           = 4DIGIT                         ; 2006
+year           = "," 4DIGIT                         ; ,2006
 
 time           = hour / hour-ampm / hour-min / hour-min-ampm
-
-datetime-adj   = datetime adjust       ; 2006jan2,15+2w
 
 adjust         = NINE *20DIGIT ("-" / "+") ; +2w / -7d / -1y
                / ("m" / "h" / "d" / "w" / "y")
 
-timefmt-tz     = timefmt timezone     ; 2006jan2,15-07
+month-day      =  month day-month               ; jan2
 
-weekday-time   = weekday time                   ; jan2,304p
-
-month-day      = month day-of-month             ; jan2
+time-weekday   = time "," weekday               ; jan2,304p
 
 month-day-time = month-day "," time             ; jan2,15
 
-day-of-month   = NINE                           ; 1-9 
+day-month      = NINE                           ; 1-9 
                / (("1" / "2") DIGIT)            ; 10 - 29
                / ("3" ("0","1"))                ; 30 - 31
 

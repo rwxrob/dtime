@@ -7,91 +7,91 @@ import (
 // MondayOf returns the Monday of the week passed as time rounded to the
 // beginning of the day.
 func MondayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeMondayOf(t))
+	return StartOfDay(SameTimeOnMondayOf(t))
 }
 
 // TuesdayOf returns the Tuesday of the week passed as time rounded to the
 // beginning of the day.
 func TuesdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeTuesdayOf(t))
+	return StartOfDay(SameTimeOnTuesdayOf(t))
 }
 
 // WednesdayOf returns the Wednesday of the week passed as time rounded to the
 // beginning of the day.
 func WednesdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeWednesdayOf(t))
+	return StartOfDay(SameTimeOnWednesdayOf(t))
 }
 
 // ThursdayOf returns the Thursday of the week passed as time rounded to the
 // beginning of the day.
 func ThursdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeThursdayOf(t))
+	return StartOfDay(SameTimeOnThursdayOf(t))
 }
 
 // FridayOf returns the Friday of the week passed as time rounded to the
 // beginning of the day.
 func FridayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeFridayOf(t))
+	return StartOfDay(SameTimeOnFridayOf(t))
 }
 
 // SaturdayOf returns the Saturday of the week passed as time rounded to the
 // beginning of the day.
 func SaturdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeSaturdayOf(t))
+	return StartOfDay(SameTimeOnSaturdayOf(t))
 }
 
 // SundayOf returns the Sunday of the week passed as time rounded to the
 // beginning of the day.
 func SundayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeSundayOf(t))
+	return StartOfDay(SameTimeOnSundayOf(t))
 }
 
-// SameTimeMondayOf returns the exact same time but on the Monday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeMondayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Monday) * 24 * time.Hour))
+// SameTimeOnMondayOf returns the exact same time but on the Monday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnMondayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Monday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeTuesdayOf returns the exact same time but on the Tuesday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeTuesdayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Tuesday) * 24 * time.Hour))
+// SameTimeOnTuesdayOf returns the exact same time but on the Tuesday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnTuesdayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Tuesday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeWednesdayOf returns the exact same time but on the Wednesday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeWednesdayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Wednesday) * 24 * time.Hour))
+// SameTimeOnWednesdayOf returns the exact same time but on the Wednesday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnWednesdayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Wednesday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeThursdayOf returns the exact same time but on the Thursday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeThursdayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Thursday) * 24 * time.Hour))
+// SameTimeOnThursdayOf returns the exact same time but on the Thursday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnThursdayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Thursday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeFridayOf returns the exact same time but on the Friday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeFridayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Friday) * 24 * time.Hour))
+// SameTimeOnFridayOf returns the exact same time but on the Friday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnFridayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Friday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeSaturdayOf returns the exact same time but on the Saturday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeSaturdayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Saturday) * 24 * time.Hour))
+// SameTimeOnSaturdayOf returns the exact same time but on the Saturday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnSaturdayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Saturday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
-// SameTimeSundayOf returns the exact same time but on the Sunday of the week
-// indicated. For beginning of day use without SameTime.
-func SameTimeSundayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(t.Weekday()-time.Sunday) * 24 * time.Hour))
+// SameTimeOnSundayOf returns the exact same time but on the Sunday of the week
+// indicated. For beginning of day use without SameTimeOn.
+func SameTimeOnSundayOf(t *time.Time) *time.Time {
+	nt := t.Add((time.Duration(time.Sunday-t.Weekday()) * 24 * time.Hour))
 	return &nt
 }
 
@@ -113,6 +113,28 @@ func WeekdayOf(t *time.Time, day string) *time.Time {
 		return SaturdayOf(t)
 	case "sun", "sunday", "Sun", "Sunday":
 		return SundayOf(t)
+	}
+	return nil
+}
+
+// SameTimeOnWeekdayOf returns the day of the week passed rounded to the
+// beginning of the week day indicated.
+func SameTimeOnWeekdayOf(t *time.Time, day string) *time.Time {
+	switch day {
+	case "mon", "monday", "Mon", "Monday":
+		return SameTimeOnMondayOf(t)
+	case "tue", "tuesday", "Tue", "Tuesday":
+		return SameTimeOnTuesdayOf(t)
+	case "wed", "wednesday", "Wed", "Wednesday":
+		return SameTimeOnWednesdayOf(t)
+	case "thu", "thursday", "Thu", "Thursday":
+		return SameTimeOnThursdayOf(t)
+	case "fri", "friday", "Fri", "Friday":
+		return SameTimeOnFridayOf(t)
+	case "sat", "saturday", "Sat", "Saturday":
+		return SameTimeOnSaturdayOf(t)
+	case "sun", "sunday", "Sun", "Sunday":
+		return SameTimeOnSundayOf(t)
 	}
 	return nil
 }
