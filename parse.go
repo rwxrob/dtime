@@ -1,6 +1,7 @@
 package timefmt
 
 import (
+	"strconv"
 	"time"
 )
 
@@ -116,6 +117,12 @@ func ParseTime(s string) *time.Time {
 	return &nt
 }
 
+// ParseWeekday
+func ParseWeekday(s string) *time.Time {
+	// TODO
+	return nil
+}
+
 // ParseMonth returns the beginning of the month indicated. Any of the
 // following formats are valid:
 //
@@ -123,23 +130,26 @@ func ParseTime(s string) *time.Time {
 //     Jan
 //     january
 //     January
+//     ...
 //
 // The rest of the time will be assumed to be the beginning of the current year
-// in local time.
+// in local time. Also see MonthOf().
 func ParseMonth(s string) *time.Time {
-	switch s {
-	case "jan", "Jan", "january", "January":
-	case "feb", "Feb", "february", "February":
-	case "mar", "Mar", "march", "March":
-	case "apr", "Apr", "april", "April":
-	case "may", "May":
-	case "jun", "Jun", "june", "June":
-	case "jul", "Jul", "july", "July":
-	case "aug", "Aug", "august", "August":
-	case "sep", "Sep", "september", "September":
-	case "oct", "Oct", "october", "October":
-	case "nov", "Nov", "november", "November":
-	case "dec", "Dec", "december", "December":
+	_now := time.Now()
+	now := &_now
+	return MonthOf(now, s)
+}
+
+// ParseYear returns the beginning of the indicated year as a local time.
+func ParseYear(s string) *time.Time {
+	if len(s) < 4 {
+		return nil
 	}
-	return nil
+	t, err := strconv.Atoi(s)
+	if err != nil {
+		return nil
+	}
+	now := time.Now()
+	nt := time.Date(t, 1, 1, 0, 0, 0, 0, now.Location())
+	return &nt
 }

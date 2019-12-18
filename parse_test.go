@@ -13,3 +13,7 @@ func TestParseTime(t *testing.T) {
 	t.Log(ParseTime("215p"))
 	t.Log(ParseTime("2006"))
 }
+
+func TestParseYear(t *testing.T) {
+	t.Log(ParseYear("1980"))
+}

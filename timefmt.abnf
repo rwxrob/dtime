@@ -19,8 +19,19 @@ datetime       = "now"
 
 weekday        = "mon" / "tue" / "wed" / "thu" / "fri" / "sat" / "sun"
 
-month          = "jan" / "feb" / "mar" / "apr" / "may" / "jun" 
+month          = month-short / month-long
+
+month-short    = "jan" / "feb" / "mar" / "apr" / "may" / "jun" 
                / "jul" / "aug" / "sep" / "oct" / "nov" / "dec"
+               / "Jan" / "Feb" / "Mar" / "Apr" / "May" / "Jun" 
+               / "Jul" / "Aug" / "Sep" / "Oct" / "Nov" / "Dec"
+
+month-long    = "january", "february", "march", "april", "may",
+              / "june", "july", "august", "september", "october",
+              / "november", "december"
+              / "January", "February", "March", "April", "May",
+              / "June", "July", "August", "September", "October",
+              / "November", "December"
 
 year           = "," 4DIGIT                         ; ,2006
 
