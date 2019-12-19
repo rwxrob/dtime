@@ -560,7 +560,7 @@ func SameTimeOnSaturdayOf(t *time.Time) *time.Time {
 // SameTimeOnSundayOf returns the exact same time but on the Sunday of the week
 // indicated. For beginning of day use without SameTimeOn.
 func SameTimeOnSundayOf(t *time.Time) *time.Time {
-	nt := t.Add((time.Duration(time.Sunday-t.Weekday()) * 24 * time.Hour))
+	nt := t.Add((time.Duration(time.Sunday-t.Weekday()+7) * 24 * time.Hour))
 	return &nt
 }
 
@@ -586,9 +586,9 @@ func DayOfWeek(t *time.Time, day string) *time.Time {
 	return nil
 }
 
-// SameTimeOnWeekdayOf returns the day of the week passed rounded to the
+// SameTimeOnDayOfWeek returns the day of the week passed rounded to the
 // beginning of the week day indicated.
-func SameTimeOnWeekdayOf(t *time.Time, day string) *time.Time {
+func SameTimeOnDayOfWeek(t *time.Time, day string) *time.Time {
 	switch day {
 	case "mon", "monday", "Mon", "Monday":
 		return SameTimeOnMondayOf(t)
