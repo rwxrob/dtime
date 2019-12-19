@@ -25,7 +25,7 @@ func WeekOf(t *time.Time) *time.Time {
 	return MondayOf(t)
 }
 
-// StartOfMonth returns the start of the month.
+// MonthOf returns the start of the month.
 func MonthOf(t *time.Time) *time.Time {
 	nt := time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
 	return &nt

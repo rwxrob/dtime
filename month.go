@@ -194,7 +194,7 @@ func MonthOfYear(t *time.Time, month string) *time.Time {
 	return nil
 }
 
-// SameTimeInMonthOf returns the exact same month day and time but for the
+// SameTimeInMonthOfYear returns the exact same month day and time but for the
 // specified month instead.
 func SameTimeInMonthOfYear(t *time.Time, month string) *time.Time {
 	switch month {
