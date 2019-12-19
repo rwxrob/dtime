@@ -279,6 +279,35 @@ func TestDecemberOf(t *testing.T) {
 	}
 }
 
+func TestMonthOfYear(t *testing.T) {
+	got := MonthOfYear(&then, "foo")
+	if got != nil {
+		t.Fail()
+	}
+
+}
+
+func TestSameTimeInMonthOfYear(t *testing.T) {
+	got := SameTimeInMonthOfYear(&then, "foo")
+	if got != nil {
+		t.Fail()
+	}
+}
+
+func TestDayOfWeek(t *testing.T) {
+	got := DayOfWeek(&then, "foo")
+	if got != nil {
+		t.Fail()
+	}
+}
+
+func TestSameTimeOnDayOfWeek(t *testing.T) {
+	got := SameTimeOnDayOfWeek(&then, "foo")
+	if got != nil {
+		t.Fail()
+	}
+}
+
 func TestSameTimeInJanuaryOf(t *testing.T) {
 	got := []*time.Time{
 		SameTimeInJanuaryOf(&then),

@@ -8,14 +8,9 @@
 package htime
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 )
-
-func dump(thing interface{}) {
-	fmt.Printf("%v\n", thing)
-}
 
 // Parse is the main function in this package and provides a minimal format for
 // entering date and time information in a practical way. It's primary use case
