@@ -1,6 +1,8 @@
 # Human-Friendly Date and Time Formats for Go (golang)
 
-[![Go Report Card](https://goreportcard.com/badge/gitlab.com/skilstak/go/htime)](https://goreportcard.com/report/gitlab.com/skilstak/go/htime) [![Coverage](https://gocover.io/_badge/gitlab.com/skilstak/go/htime)](https://gocover.io/gitlab.com/skilstak/go/htime) [![GoDoc](https://godoc.org/gitlab.com/skilstak/go/htime?status.svg)](https://godoc.org/gitlab.com/skilstak/go/htime)
+[![GoDoc](https://godoc.org/gitlab.com/skilstak/go/htime?status.svg)](https://godoc.org/gitlab.com/skilstak/go/htime)
+[![Go Report Card](https://goreportcard.com/badge/gitlab.com/skilstak/go/htime)](https://goreportcard.com/report/gitlab.com/skilstak/go/htime)
+[![https://coveralls.io/gitlab/skilstak/go/htime](https://coveralls.io/repos/gitlab/skilstak/go/htime/badge.svg?branch=master)](https://coveralls.io/gitlab/skilstak/go/htime)]
 
 Work in progress. Public for collaboration and education
 
