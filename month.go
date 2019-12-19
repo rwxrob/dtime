@@ -76,104 +76,127 @@ func DecemberOf(t *time.Time) *time.Time {
 	return StartOfMonth(SameTimeInDecemberOf(t))
 }
 
+func samemonth(t *time.Time, month int) *time.Time {
+	d := time.Date(
+		t.Year(),
+		time.Month(month),
+		t.Day(),
+		t.Hour(),
+		t.Minute(),
+		t.Second(),
+		t.Nanosecond(),
+		t.Location(),
+	)
+	return &d
+}
+
 // SameTimeInJanuaryOf returns the exact same month day and time but for the
 // month of January instead.
 func SameTimeInJanuaryOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 1)
 }
 
 // SameTimeInFebruaryOf returns the exact same month day and time but for the
 // month of February instead.
 func SameTimeInFebruaryOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 2)
 }
 
 // SameTimeInMarchOf returns the exact same month day and time but for the
 // month of March instead.
 func SameTimeInMarchOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 3)
 }
 
 // SameTimeInAprilOf returns the exact same month day and time but for the
 // month of April instead.
 func SameTimeInAprilOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 4)
 }
 
 // SameTimeInMayOf returns the exact same month day and time but for the
 // month of May instead.
 func SameTimeInMayOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 5)
 }
 
 // SameTimeInJuneOf returns the exact same month day and time but for the
 // month of June instead.
 func SameTimeInJuneOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 6)
 }
 
 // SameTimeInJulyOf returns the exact same month day and time but for the
 // month of July instead.
 func SameTimeInJulyOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 7)
 }
 
 // SameTimeInAugustOf returns the exact same month day and time but for the
 // month of August instead.
 func SameTimeInAugustOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 8)
 }
 
 // SameTimeInSeptemberOf returns the exact same month day and time but for the
 // month of September instead.
 func SameTimeInSeptemberOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 9)
 }
 
 // SameTimeInOctoberOf returns the exact same month day and time but for the
 // month of October instead.
 func SameTimeInOctoberOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 10)
 }
 
 // SameTimeInNovemberOf returns the exact same month day and time but for the
 // month of November instead.
 func SameTimeInNovemberOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 11)
 }
 
 // SameTimeInDecemberOf returns the exact same month day and time but for the
 // month of December instead.
 func SameTimeInDecemberOf(t *time.Time) *time.Time {
-	// TODO
-	return nil
+	return samemonth(t, 12)
 }
 
-// MonthOf returns the beginning of the first day of the specified month of the
+// MonthOfYear returns the beginning of the first day of the specified month of the
 // given year.
-func MonthOf(t *time.Time, month string) *time.Time {
+func MonthOfYear(t *time.Time, month string) *time.Time {
 	switch month {
 	case "jan", "january", "Jan", "January":
 		return JanuaryOf(t)
-		// TODO add more
+	case "feb", "Feb", "february", "February":
+		return FebruaryOf(t)
+	case "mar", "Mar", "march", "March":
+		return MarchOf(t)
+	case "apr", "Apr", "april", "April":
+		return AprilOf(t)
+	case "may", "May":
+		return MayOf(t)
+	case "jun", "Jun", "june", "June":
+		return JuneOf(t)
+	case "jul", "Jul", "july", "July":
+		return JulyOf(t)
+	case "aug", "Aug", "august", "August":
+		return AugustOf(t)
+	case "sep", "Sep", "september", "September":
+		return SeptemberOf(t)
+	case "oct", "Oct", "october", "October":
+		return OctoberOf(t)
+	case "nov", "Nov", "november", "November":
+		return NovemberOf(t)
+	case "dec", "Dec", "december", "December":
+		return DecemberOf(t)
 	}
 	return nil
 }
 
 // SameTimeInMonthOf returns the exact same month day and time but for the
 // specified month instead.
-func SameTimeInMonthOf(t *time.Time, month string) *time.Time {
+func SameTimeInMonthOfYear(t *time.Time, month string) *time.Time {
 	switch month {
 	case "jan", "Jan", "january", "January":
 		return SameTimeInJanuaryOf(t)

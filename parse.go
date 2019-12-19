@@ -31,7 +31,7 @@ func Parse(s string) *time.Time {
 	if n == 3 {
 		switch s[0:3] {
 		case "mon", "tue", "wed", "thu", "fri", "sat", "sun":
-			return WeekdayOf(now, s[0:3])
+			return DayOfWeek(now, s[0:3])
 		case "jan", "feb", "mar", "apr", "may", "jun", "jul",
 			"aug", "sep", "oct", "nov", "dec":
 			// TODO return MonthOf(now, s[0:3])
@@ -46,6 +46,8 @@ func Parse(s string) *time.Time {
 			return ParseTime(s)
 		}
 	}
+
+	// TODO
 
 	// weekday-time
 
@@ -117,10 +119,20 @@ func ParseTime(s string) *time.Time {
 	return &nt
 }
 
-// ParseWeekday
+// ParseWeekday return the beginning of the weekday indicated. Any of the
+// following formats are valid:
+//
+//     mon
+//     Mon
+//     monday
+//     Monday
+//     ...
+//
+// The time is assumed to be within the current week.  See WeekdayOf().
 func ParseWeekday(s string) *time.Time {
-	// TODO
-	return nil
+	_now := time.Now()
+	now := &_now
+	return DayOfWeek(now, s)
 }
 
 // ParseMonth returns the beginning of the month indicated. Any of the
@@ -132,15 +144,15 @@ func ParseWeekday(s string) *time.Time {
 //     January
 //     ...
 //
-// The rest of the time will be assumed to be the beginning of the current year
-// in local time. Also see MonthOf().
+// The time is assumed to be within the current week.  See MonthOf().
 func ParseMonth(s string) *time.Time {
 	_now := time.Now()
 	now := &_now
-	return MonthOf(now, s)
+	return MonthOfYear(now, s)
 }
 
 // ParseYear returns the beginning of the indicated year as a local time.
+// The time is assumed to be within the current year.  See YearOf().
 func ParseYear(s string) *time.Time {
 	if len(s) < 4 {
 		return nil

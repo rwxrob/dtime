@@ -95,9 +95,9 @@ func SameTimeOnSundayOf(t *time.Time) *time.Time {
 	return &nt
 }
 
-// WeekdayOf returns the day of the week passed rounded to the beginning of the
-// week day indicated.
-func WeekdayOf(t *time.Time, day string) *time.Time {
+// DayOfWeek returns the day of the week passed rounded to the beginning of the
+// weekday indicated.
+func DayOfWeek(t *time.Time, day string) *time.Time {
 	switch day {
 	case "mon", "monday", "Mon", "Monday":
 		return MondayOf(t)
