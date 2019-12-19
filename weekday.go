@@ -1,4 +1,4 @@
-package timefmt
+package htime
 
 import (
 	"time"
@@ -7,43 +7,43 @@ import (
 // MondayOf returns the Monday of the week passed as time rounded to the
 // beginning of the day.
 func MondayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnMondayOf(t))
+	return DayOf(SameTimeOnMondayOf(t))
 }
 
 // TuesdayOf returns the Tuesday of the week passed as time rounded to the
 // beginning of the day.
 func TuesdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnTuesdayOf(t))
+	return DayOf(SameTimeOnTuesdayOf(t))
 }
 
 // WednesdayOf returns the Wednesday of the week passed as time rounded to the
 // beginning of the day.
 func WednesdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnWednesdayOf(t))
+	return DayOf(SameTimeOnWednesdayOf(t))
 }
 
 // ThursdayOf returns the Thursday of the week passed as time rounded to the
 // beginning of the day.
 func ThursdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnThursdayOf(t))
+	return DayOf(SameTimeOnThursdayOf(t))
 }
 
 // FridayOf returns the Friday of the week passed as time rounded to the
 // beginning of the day.
 func FridayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnFridayOf(t))
+	return DayOf(SameTimeOnFridayOf(t))
 }
 
 // SaturdayOf returns the Saturday of the week passed as time rounded to the
 // beginning of the day.
 func SaturdayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnSaturdayOf(t))
+	return DayOf(SameTimeOnSaturdayOf(t))
 }
 
 // SundayOf returns the Sunday of the week passed as time rounded to the
 // beginning of the day.
 func SundayOf(t *time.Time) *time.Time {
-	return StartOfDay(SameTimeOnSundayOf(t))
+	return DayOf(SameTimeOnSundayOf(t))
 }
 
 // SameTimeOnMondayOf returns the exact same time but on the Monday of the week

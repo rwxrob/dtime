@@ -1,55 +1,55 @@
-package timefmt_test
+package htime_test
 
 import (
 	"fmt"
 	"time"
 
-	"gitlab.com/skilstak/go/timefmt"
+	"gitlab.com/skilstak/go/htime"
 )
 
-func ExampleStartOfMinute() {
+func ExampleMinuteOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfMinute(&t))
+	fmt.Println(htime.MinuteOf(&t))
 
 	// Output:
 	// 2020-05-13 14:34:00 -0500 -0500
 }
 
-func ExampleStartOfHour() {
+func ExampleHourOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfHour(&t))
+	fmt.Println(htime.HourOf(&t))
 
 	// Output:
 	// 2020-05-13 14:00:00 -0500 -0500
 }
 
-func ExampleStartOfDay() {
+func ExampleDayOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfDay(&t))
+	fmt.Println(htime.DayOf(&t))
 
 	// Output:
 	// 2020-05-13 00:00:00 -0500 -0500
 }
 
-func ExampleStartOfWeek() {
+func ExampleWeekOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfWeek(&t))
+	fmt.Println(htime.WeekOf(&t))
 
 	// Output:
 	// 2020-05-11 00:00:00 -0500 -0500
 }
 
-func ExampleStartOfMonth() {
+func ExampleMonthOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfMonth(&t))
+	fmt.Println(htime.MonthOf(&t))
 
 	// Output:
 	// 2020-05-01 00:00:00 -0500 -0500
 }
 
-func ExampleStartOfYear() {
+func ExampleYearOf() {
 	t, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:56 -0500")
-	fmt.Println(timefmt.StartOfYear(&t))
+	fmt.Println(htime.YearOf(&t))
 
 	// Output:
 	// 2020-01-01 00:00:00 -0500 -0500

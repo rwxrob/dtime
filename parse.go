@@ -1,11 +1,20 @@
-package timefmt
+package htime
 
 import (
 	"strconv"
 	"time"
 )
 
-// Parse infers the format and returns a Time.
+// Parse is the main function in this package and provides a minimal format for
+// entering date and time information in a practical way. It's primary use case
+// is when a user needs to enter such data quickly and regularly from the
+// command line or into mobile and other devices where human input speed is
+// limited to what can be tapped out on the screen. The characters used in the
+// formatting only characters that appear on most default keyboards without
+// shifting or switching to symbolic input. The package provides no method of
+// specifying timezone, which falls out of the scope of this package. All times
+// are therefore assumed to be local. For a precise specification of the format
+// see the timefmt.abnf time included with the package source code.
 func Parse(s string) *time.Time {
 
 	// use of simple logic lighter weight (faster)

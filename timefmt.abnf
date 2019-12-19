@@ -1,7 +1,7 @@
-; TimeFmt Specification v1.0.0
+; HTime Specification v1.0.0
 ; All times assumed to be local (no timezone support).
 
-timefmt        = datetime / datetime-adj
+htime          = datetime / datetime-adj
 
 datetime-adj   = datetime adjust       ; 2006jan2,15+2w
 

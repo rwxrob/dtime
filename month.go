@@ -1,4 +1,4 @@
-package timefmt
+package htime
 
 import (
 	"time"
@@ -7,73 +7,73 @@ import (
 // JanuaryOf returns the beginning of the first day of January of the given
 // year.
 func JanuaryOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInJanuaryOf(t))
+	return MonthOf(SameTimeInJanuaryOf(t))
 }
 
 // FebruaryOf returns the beginning of the first day of February of the given
 // year.
 func FebruaryOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInFebruaryOf(t))
+	return MonthOf(SameTimeInFebruaryOf(t))
 }
 
 // MarchOf returns the beginning of the first day of March of the given
 // year.
 func MarchOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInMarchOf(t))
+	return MonthOf(SameTimeInMarchOf(t))
 }
 
 // AprilOf returns the beginning of the first day of April of the given
 // year.
 func AprilOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInAprilOf(t))
+	return MonthOf(SameTimeInAprilOf(t))
 }
 
 // MayOf returns the beginning of the first day of May of the given
 // year.
 func MayOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInMayOf(t))
+	return MonthOf(SameTimeInMayOf(t))
 }
 
 // JuneOf returns the beginning of the first day of June of the given
 // year.
 func JuneOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInJuneOf(t))
+	return MonthOf(SameTimeInJuneOf(t))
 }
 
 // JulyOf returns the beginning of the first day of July of the given
 // year.
 func JulyOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInJulyOf(t))
+	return MonthOf(SameTimeInJulyOf(t))
 }
 
 // AugustOf returns the beginning of the first day of August of the given
 // year.
 func AugustOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInAugustOf(t))
+	return MonthOf(SameTimeInAugustOf(t))
 }
 
 // SeptemberOf returns the beginning of the first day of September of the given
 // year.
 func SeptemberOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInSeptemberOf(t))
+	return MonthOf(SameTimeInSeptemberOf(t))
 }
 
 // OctoberOf returns the beginning of the first day of October of the given
 // year.
 func OctoberOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInOctoberOf(t))
+	return MonthOf(SameTimeInOctoberOf(t))
 }
 
 // NovemberOf returns the beginning of the first day of November of the given
 // year.
 func NovemberOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInNovemberOf(t))
+	return MonthOf(SameTimeInNovemberOf(t))
 }
 
 // DecemberOf returns the beginning of the first day of December of the given
 // year.
 func DecemberOf(t *time.Time) *time.Time {
-	return StartOfMonth(SameTimeInDecemberOf(t))
+	return MonthOf(SameTimeInDecemberOf(t))
 }
 
 func samemonth(t *time.Time, month int) *time.Time {
