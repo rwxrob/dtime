@@ -15,10 +15,33 @@ import (
 // specifying timezone, which falls out of the scope of this package. All times
 // are therefore assumed to be local. For a precise specification of the format
 // see the timefmt.abnf time included with the package source code.
-func Parse(s string) *time.Time {
+func Parse(s string) (*time.Time, *time.Duration) {
+	// TODO
+	return nil, nil
+}
 
-	// use of simple logic lighter weight (faster)
-	// than regular expressions
+// ParseDateTime returns a time from an input string that is any of the
+// following date and time combinations:
+//
+//     mon
+//     jan
+//     3p 304p 15 1504
+//     15,mon
+//     1504,mon
+//     304p,mon
+//     jan2
+//     15,jan2
+//     1504,jan2
+//     304p,jan2
+//     ,2006
+//     jan,2006
+//     jan2,2006
+//     15,jan2,2006
+//     304p,jan2,2006
+//
+// See Parse*() for additional format possibilities.
+//
+func ParseDateTime(s string) *time.Time {
 
 	n := len(s)
 
@@ -27,10 +50,11 @@ func Parse(s string) *time.Time {
 		return nil
 	}
 
-	// now
-
 	_now := time.Now()
 	now := &_now
+
+	// now
+
 	if s == "now" {
 		return now
 	}
@@ -54,11 +78,10 @@ func Parse(s string) *time.Time {
 		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 			return ParseTime(s)
 		}
+		// TODO more times
 	}
 
-	// TODO
-
-	// weekday-time
+	// time-weekday
 
 	// month-name
 

@@ -1,9 +1,8 @@
 ; HTime Specification v1.0.0
 ; All times assumed to be local (no timezone support).
 
-htime          = datetime / datetime-adj
-
-datetime-adj   = datetime adjust       ; 2006jan2,15+2w
+htime          = datetime [offset]
+               / offset
 
 datetime       = "now"
                / weekday               ; mon
@@ -37,8 +36,8 @@ year           = "," 4DIGIT                         ; ,2006
 
 time           = hour / hour-ampm / hour-min / hour-min-ampm
 
-adjust         = NINE *20DIGIT ("-" / "+") ; +2w / -7d / -1y
-               / ("m" / "h" / "d" / "w" / "y")
+offset         = NINE *20DIGIT ("-" / "+") ; +2w / -7d / -1y
+               / ("s" / "m" / "h" / "d" / "w" / "y")
 
 month-day      =  month day-month               ; jan2
 
