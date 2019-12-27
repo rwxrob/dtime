@@ -8,9 +8,24 @@
 package htime
 
 import (
+	"fmt"
 	"strconv"
+	"strings"
 	"time"
 )
+
+const (
+	SECOND float64 = 1000000000
+	MINUTE float64 = 60000000000
+	HOUR   float64 = 3600000000000
+	DAY    float64 = 86400000000000
+	WEEK   float64 = 604800000000000
+	YEAR   float64 = 31536000000000000
+)
+
+func dump(i interface{}) {
+	fmt.Printf("%v\n", i)
+}
 
 // Parse is the main function in this package and provides a minimal format for
 // entering date and time information in a practical way. It's primary use case
@@ -23,8 +38,80 @@ import (
 // are therefore assumed to be local. For a precise specification of the format
 // see the timefmt.abnf time included with the package source code.
 func Parse(s string) (*time.Time, *time.Duration) {
-	// TODO
-	return nil, nil
+	/*
+		p := strings.IndexAny(s, "+-")
+
+		// just a datetime
+		if p < 0 {
+			return ParseDateTime(s), nil
+		}
+
+		// just an offset
+		if p == 0 {
+			_now := time.Now()
+			return &_now, ParseOffset(s)
+		}
+
+		// both datetime and offset
+		dt := ParseDateTime(s[0:p])
+		off := ParseOffset(s[p:])
+		if dt == nil || off == nil {
+			return nil, nil
+		}
+		return dt, off
+	*/
+	p := new(parser)
+	p.Buffer = s
+	p.Init()
+	p.Parse()
+	p.Execute()
+	t := time.Duration(int64(p.offset))
+	dump(t)
+	return nil, &t
+}
+
+// ParseOffset returns a pointer to time.Duration. The input strings are
+// a similar to those supported as arguments to time.ParseDuration() but
+// must always begin with a mandatory plus (+) or minus (-), for example:
+//
+//     +10m
+//     -3h
+//     +10s
+//
+// Note that the any valid Go duration is also acceptable even though simply
+// durations are the most popular and encouraged:
+//
+//     +1m20s
+//     +1.5h
+//
+// The following are just aliases really and are not safe for bounding
+// daylight savings and leap time:
+//
+//     +2d (days, one day = 24h)
+//     -1w (weeks, one week = 7 days, 168h)
+//
+// Note that months were omitted due their large differences in number of days.
+// Use weeks instead.
+func ParseOffset(s string) *time.Duration {
+	if len(s) < 3 || (s[0] != '-' && s[0] != '+') {
+		return nil
+	}
+	var hours float64
+	if strings.Index(s, "w") > 0 {
+		if strings.Index(s, "h") > 0 {
+			// TODO get the h stuff convert to h
+		}
+		// TODO cut out w stuff
+		//TODO
+		dump(hours)
+	}
+	if strings.Index(s, "d") >= 0 {
+		// TODO
+		// TODO get the d stuff convert to h
+		// TODO cut out d stuff
+	}
+	d, _ := time.ParseDuration(s)
+	return &d
 }
 
 // ParseDateTime returns a time from an input string that is any of the
@@ -47,7 +134,6 @@ func Parse(s string) (*time.Time, *time.Duration) {
 //     304p,jan2,2006
 //
 // See Parse*() for additional format possibilities.
-//
 func ParseDateTime(s string) *time.Time {
 
 	n := len(s)

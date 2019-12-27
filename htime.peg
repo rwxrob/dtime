@@ -1,0 +1,47 @@
+package htime
+
+import "time"
+
+type parser Peg {
+  t time.Time
+  offset float64 
+  offdir float64
+  num float64
+  e error
+}
+
+String
+  <-  Expr END
+
+Expr
+  <- DateTimeOffset
+  /  Offset
+
+DateTimeOffset
+  <- DateTime Offset?
+
+DateTime
+  <- 'datetime'
+
+Offset
+  <- OffDir OffYear?  OffWeek?  OffDay?  OffHour?  OffMinute?  OffSecond? WS?
+     { p.offset *= p.offdir }
+
+OffDir    <- '+' {p.offdir=1} / '-' {p.offdir=-1}
+OffYear   <- NUM 'y' {p.offset += p.num*YEAR}
+OffWeek   <- NUM 'w' {p.offset += p.num*WEEK}
+OffDay    <- NUM 'd' {p.offset += p.num*DAY}
+OffHour   <- NUM 'h' {p.offset += p.num*HOUR}
+OffMinute <- NUM 'm' {p.offset += p.num*MINUTE}
+OffSecond <- NUM 's' {p.offset += p.num*SECOND}
+
+NUM
+  <- < [0-9] ('.' [0-9]+)? >
+     {
+        f, _ := strconv.ParseFloat(text,64);
+        p.num = f
+     }
+
+WS <- ' '
+
+END <- !.

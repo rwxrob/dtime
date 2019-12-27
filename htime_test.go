@@ -10,7 +10,8 @@ const FMT = `2006-01-02 15:04:05 -0700`
 var then, _ = time.Parse(FMT, "2020-05-13 14:34:54 -0500")
 
 func TestParse(t *testing.T) {
-	t.Log(Parse("tue"))
+	t.Log(Parse("+1.4d5h"))
+	t.Log(Parse("-1.25y"))
 }
 
 func TestParseDateTime(t *testing.T) {
@@ -728,6 +729,31 @@ func TestSameTimeSundayOf(t *testing.T) {
 	for _, g := range got {
 		want, _ := time.Parse(FMT, "2020-05-17 14:34:54 -0500")
 		if want.Unix() != g.Unix() {
+			t.Fatalf("\nwant: %v\ngot:  %v\n", want, got)
+		}
+	}
+}
+
+func TestParseOffet_nil(t *testing.T) {
+	got := ParseOffset("")
+	if got != nil {
+		t.Fail()
+	}
+}
+
+func TestParseOffet_durations(t *testing.T) {
+	test := []string{
+		"+2h",
+		"-1m",
+	}
+	wants := []int{
+		7200000000000,
+		-60000000000,
+	}
+	for i, v := range test {
+		got := int(*ParseOffset(v))
+		want := wants[i]
+		if got != want {
 			t.Fatalf("\nwant: %v\ngot:  %v\n", want, got)
 		}
 	}

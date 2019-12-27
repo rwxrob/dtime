@@ -36,8 +36,14 @@ year           = "," 4DIGIT                         ; ,2006
 
 time           = hour / hour-ampm / hour-min / hour-min-ampm
 
-offset         = NINE *20DIGIT ("-" / "+") ; +2w / -7d / -1y
+offset         = 
                / ("s" / "m" / "h" / "d" / "w" / "y")
+
+go-dur         = [("-" /"+")] 1*(go-dur-units / cal-dur-units)
+
+go-dur-units   = FLOAT ("ns" / "us" / "µs" / "ms" / "s" / "m" / "h")
+
+cal-dur-units  = FLOAT ("d" / "w") 
 
 month-day      =  month day-month               ; jan2
 
@@ -71,3 +77,4 @@ NINE           = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
 
 FIVE           = "1" / "2" / "3" / "4" / "5"
 
+FLOAT          = 1*DIGIT ["." 1*DIGIT]
