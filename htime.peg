@@ -2,44 +2,188 @@ package htime
 
 import "time"
 
-type parser Peg {
-  t time.Time
+type spanParser Peg {
+
+  start time.Time
+
   offset float64 
   offdir float64
-  num float64
-  e error
+
+  year int
+  month int
+  day int
+  wday int
+  hour int
+  min int
+
+  _float float64
+  _int int
+  _e error
 }
 
 String
-  <-  Expr END
-
-Expr
-  <- DateTimeOffset
-  /  Offset
-
-DateTimeOffset
-  <- DateTime Offset?
+  <- DateTime Offset? END
+  /  Offset           END
 
 DateTime
-  <- 'datetime'
+
+  <- "now" 
+     { p.start = *_deftime() }
+
+  /  Weekday                      # mon
+     {
+       p.start = *_deftime()
+       mon := MondayOf(&p.start)
+       p.start = mon.Add(time.Duration(p.wday) * time.Hour * 24)
+     }
+
+  /  Month ![,1-9]                # jan
+     {
+       t := _deftime()
+       m := time.Month(p.month)
+       p.start = time.Date(t.Year(),m,1,0,0,0,0,t.Location())
+     }
+
+  /  Time !','                    # 3p 304p 15 1504
+     {
+       t := *Today()
+       p.start = time.Date(t.Year(),t.Month(),t.Day(),p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Time ',' Weekday !','        # 15,mon / 1504,mon / 304p,mon
+     {
+       t := MondayOf(Today())
+       day := t.Day() + p.wday
+       p.start = time.Date(t.Year(),t.Month(),day,p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Month Day !','               # jan2
+     {
+       t := _deftime()
+       p.start = time.Date(t.Year(),time.Month(p.month),p.day,0,0,0,0,t.Location())
+     }
+
+  /  Time ',' Month Day !','      # 15,jan2 / 1504,jan2 / 304p,jan2
+     {
+       t := _deftime()
+       p.start = time.Date(t.Year(),time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
+     }
+
+  /  ',' Year                     # ,2006
+     {
+       t := _deftime()
+       p.start = time.Date(t.Year(),1,1,0,0,0,0,t.Location())
+
+     }
+
+  /  Month ',' Year               # jan,2006
+     {
+       t := _deftime()
+       p.start = time.Date(p.year,time.Month(p.month),1,0,0,0,0,t.Location())
+     }
+
+  /  Month Day ',' Year           # jan2,2006
+     {
+       t := _deftime()
+       p.start = time.Date(p.year,time.Month(p.month),p.day,0,0,0,0,t.Location())
+     }
+
+  /  Time ',' Month Day ',' Year  # 15,jan2,2006 / 304p,jan2,2006
+     {
+       t := _deftime()
+       p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
+     }
+
+Weekday
+  <- "mon" "day"?    {p.wday = 0}
+  /  "tue" "sday"?   {p.wday = 1}
+  /  "wed" "nesday"? {p.wday = 2}
+  /  "thu" "rsday"?  {p.wday = 3}
+  /  "fri" "day"?    {p.wday = 4}
+  /  "sat" "urday"?  {p.wday = 5}
+  /  "sun" "day"?    {p.wday = 6}
+
+Month
+  <- "jan" "uary"?   {p.month = 1}
+  /  "feb" "ruary"?  {p.month = 2}
+  /  "mar" "ch"?     {p.month = 3}
+  /  "apr" "ril"?    {p.month = 4}
+  /  "may"           {p.month = 5}
+  /  "jun" "e"?      {p.month = 6}
+  /  "jul" "y"?      {p.month = 7}
+  /  "aug" "ust"?    {p.month = 8}
+  /  "sep" "tember"? {p.month = 9}
+  /  "oct" "tober"?  {p.month = 10}
+  /  "nov" "ember"?  {p.month = 11}
+  /  "dec" "ember"?  {p.month = 12}
+
+Day
+  <- (< [1-9] >
+  /  < '1' [0-9] >
+  /  < '2' [0-9] >
+  /  < '3' [0-1] >)
+     {
+       i, _ := strconv.Atoi(text)
+       p.day = i
+     }
+
+Time
+  <- Hour                # 15
+  /  Hour12 AmPm         # 3p
+  /  Hour Minute         # 1504 
+  /  Hour12 Minute AmPm  # 304p
+
+Hour
+  <- (< [0-1] [0-9] >    # 00-19
+  /   < '2' [0-3]   >)   # 20-23
+     {
+       i, _ := strconv.Atoi(text)
+       p.hour = i
+     }
+
+Hour12
+  <- (< [1-9] >
+  /   < '1' [0-2] >)
+     {
+       i, _ := strconv.Atoi(text)
+       p.hour = i
+     }
+
+AmPm
+  <- "a" "m"? 
+  /  "p" "m"? {p.hour += 12}
+
+Minute
+  <- < [0-5] [0-9] >
+     {
+       i, _ := strconv.Atoi(text)
+       p.min = i
+     }
+
+Year
+  <- < [1-9] [0-9]* >
+     {
+       i, _ := strconv.Atoi(text)
+       p.year = i
+     }
 
 Offset
   <- OffDir OffYear?  OffWeek?  OffDay?  OffHour?  OffMinute?  OffSecond? WS?
      { p.offset *= p.offdir }
 
 OffDir    <- '+' {p.offdir=1} / '-' {p.offdir=-1}
-OffYear   <- NUM 'y' {p.offset += p.num*YEAR}
-OffWeek   <- NUM 'w' {p.offset += p.num*WEEK}
-OffDay    <- NUM 'd' {p.offset += p.num*DAY}
-OffHour   <- NUM 'h' {p.offset += p.num*HOUR}
-OffMinute <- NUM 'm' {p.offset += p.num*MINUTE}
-OffSecond <- NUM 's' {p.offset += p.num*SECOND}
+OffYear   <- FLOAT 'y' {p.offset += p._float*YEAR}
+OffWeek   <- FLOAT 'w' {p.offset += p._float*WEEK}
+OffDay    <- FLOAT 'd' {p.offset += p._float*DAY}
+OffHour   <- FLOAT 'h' {p.offset += p._float*HOUR}
+OffMinute <- FLOAT 'm' {p.offset += p._float*MINUTE}
+OffSecond <- FLOAT 's' {p.offset += p._float*SECOND}
 
-NUM
+FLOAT
   <- < [0-9] ('.' [0-9]+)? >
      {
         f, _ := strconv.ParseFloat(text,64);
-        p.num = f
+        p._float = f
      }
 
 WS <- ' '

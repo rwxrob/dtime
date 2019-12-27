@@ -7,6 +7,65 @@ import (
 	"gitlab.com/skilstak/go/htime"
 )
 
+const format = "2006-01-02 15:04 -0700"
+
+func ExampleSpan() {
+	then, _ := time.Parse(format, "2013-05-13 14:34 -0500")
+	htime.DefaultTime = &then
+	spans := []string{
+		"mon",
+		"jan",
+
+		"3p",
+		"3pm",
+		"3Pm",
+		"3PM",
+		"3pM",
+
+		"304p",
+		"304pm",
+		"304Pm",
+		"304PM",
+		"304pM",
+
+		"15",
+		"1504",
+
+		"15,mon",
+		"1504,mon",
+		"304p,mon",
+		"304pm,mon",
+
+		"jan2",
+
+		"15,jan2",
+		"1504,jan2",
+		"304p,jan2",
+
+		",2006",
+
+		"jan,2006",
+		"jan2,2006",
+		"15,jan2,2006",
+		"304p,jan2,2006",
+
+		// ------------- invalid
+
+		"26",   // attempted day, sees as bad hour
+		"2006", // attempted year, sees as hour and minute
+
+	}
+	for _, s := range spans {
+		first, last := htime.Span(s)
+		fmt.Printf("span:  %v\nfirst: %v\nlast:  %v\n\n", s, first, last)
+	}
+
+	// Output:
+	// span:  mon
+	// first: 2020-05-11 00:00:00 -0500 -0500
+	// last:  <nil>
+}
+
 func ExampleDayOfWeek() {
 	then, _ := time.Parse("2006-01-02 15:04 -0700", "2020-05-13 14:34 -0500")
 	fmt.Println(then)
