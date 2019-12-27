@@ -1,10 +1,11 @@
 package htime_test
 
+/*
 import (
 	"fmt"
 	"time"
 
-	"gitlab.com/skilstak/go/htime"
+	"gitlab.com/ssoil/htime"
 )
 
 const format = "2006-01-02 15:04 -0700"
@@ -131,3 +132,4 @@ func ExampleYearOf() {
 	// Output:
 	// 2020-01-01 00:00:00 -0500 -0500
 }
+*/

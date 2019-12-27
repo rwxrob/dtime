@@ -9,6 +9,10 @@ const FMT = `2006-01-02 15:04:05 -0700`
 
 var then, _ = time.Parse(FMT, "2020-05-13 14:34:54 -0500")
 
+func TestSpan(t *testing.T) {
+	t.Log(Span("15,mon"))
+}
+
 func TestMinuteOf(t *testing.T) {
 	got := MinuteOf(&then)
 	want, _ := time.Parse("2006-01-02 15:04:05 -0700", "2020-05-13 14:34:00 -0500")
