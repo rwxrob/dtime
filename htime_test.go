@@ -11,7 +11,8 @@ var then, _ = time.Parse(FMT, "2020-05-13 14:34:54 -0500")
 
 func TestParse(t *testing.T) {
 	t.Log(Parse("+1.4d5h"))
-	t.Log(Parse("-1.25y"))
+	t.Log(Parse("-1.1y"))
+	t.Log(Parse("+0.1s"))
 }
 
 func TestParseDateTime(t *testing.T) {
