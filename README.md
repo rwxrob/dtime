@@ -14,6 +14,10 @@ When using a mobile device the only characters available on the default keyboard
 
 This also makes these time formats particularly useful to add to applications with a terse command-line interface.
 
+## TODO
+
+* Add a `dtime` command (with tab completion).
+
 ## See Also
 
 ### TJ Holowaychuk's `go-naturaldate` Package

@@ -123,6 +123,8 @@ DTime
 
   / "now" Offset? END { p.start = *_deftime() }
 
+  / "today" Offset? END { p.start = *Today() }
+
 
 Weekday
   <- "mon" "day"?    {p.wday = 0}
