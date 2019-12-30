@@ -14,14 +14,6 @@ When using a mobile device the only characters available on the default keyboard
 
 This also makes these time formats particularly useful to add to applications with a terse command-line interface.
 
-## Priority
-
-Part of the format inference is a priority based on which formats are most likely to be used. For example, it is very rare to provide the specific minute when entering information into a mobile device or on the command-line quickly. Usually the hour will suffice. Therefore those formats with a higher likelihood of being used are resolved before others. This is why `mon3p` resolves very high on the priority list and `mon3:30p` rather low, even after the years and months. This resolution happens in nanoseconds and usually involves a human entering them by hand so these differences in priority are beyond negligible.
-
-## See Also
-
-Here's some of the stuff that inspired me or is otherwise related.
-
 ### TJ Holowaychuk's `go-naturaldate` Package
 
 TJ's [go-naturaldate](https://github.com/tj/go-naturaldate) package came out while I was developing this one. I noted his use of PEG and reworked the internals of my package to also use it. 
