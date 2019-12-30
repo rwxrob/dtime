@@ -84,12 +84,12 @@ DTime
        p.start = time.Date(p.year,t.Month(),day,p.hour,p.min,0,0,t.Location())
      }
 
-  /  Month Day Offset? END
-     {
+  / Month Day Offset? END
+  {
        t := _deftime()
        p.start = time.Date(t.Year(),time.Month(p.month),p.day,0,0,0,0,t.Location())
-     }
-
+  }
+  
   /  Time ',' Month Day Offset? END
      {
        t := _deftime()
@@ -121,6 +121,9 @@ DTime
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
+  / "now" Offset? END { p.start = *_deftime() }
+
+
 Weekday
   <- "mon" "day"?    {p.wday = 0}
   /  "tue" "sday"?   {p.wday = 1}
@@ -145,7 +148,7 @@ Month
   /  "dec" "ember"?  {p.month = 12}
 
 Day
-  <- (< [1-9] >
+  <- (< [1-9] ![0-9] >
   /  < '1' [0-9] >
   /  < '2' [0-9] >
   /  < '3' [0-1] >)
@@ -198,7 +201,7 @@ Year
      }
 
 Offset
-  <- OffDir OffYear?  OffWeek?  OffDay?  OffHour?  OffMinute?  OffSecond?
+  <-  <OffDir (OffYear / OffWeek / OffDay / OffHour / OffMinute / OffSecond)+>
      { p.offset *= p.offdir }
 
 OffDir    <- '+' {p.offdir=1} / '-' {p.offdir=-1}
@@ -210,7 +213,7 @@ OffMinute <- FLOAT 'm' {p.offset += p._float*MINUTE}
 OffSecond <- FLOAT 's' {p.offset += p._float*SECOND}
 
 FLOAT
-  <- < [0-9] ('.' [0-9]+)? >
+  <- < [0-9]+ ('.' [0-9]+)? >
      {
         f, _ := strconv.ParseFloat(text,64);
         p._float = f

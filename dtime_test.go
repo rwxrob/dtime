@@ -13,7 +13,7 @@ const FMT = `2006-01-02 15:04:05 -0700`
 var then, _ = time.Parse(FMT, "2020-05-13 14:34:54 -0500")
 
 func TestSpan(t *testing.T) {
-	spec, _ := tinout.Load("testdata/htime.yaml")
+	spec, _ := tinout.Load("testdata/dtime.yaml")
 	DefaultTime = &then
 
 	result := spec.Check(func(tt *tinout.Test) bool {
