@@ -1,8 +1,11 @@
-package htime
+package dtime
 
 import (
+	"fmt"
 	"testing"
 	"time"
+
+	"github.com/robmuh/tinout"
 )
 
 const FMT = `2006-01-02 15:04:05 -0700`
@@ -10,7 +13,25 @@ const FMT = `2006-01-02 15:04:05 -0700`
 var then, _ = time.Parse(FMT, "2020-05-13 14:34:54 -0500")
 
 func TestSpan(t *testing.T) {
-	t.Log(Span("15,mon"))
+	spec, _ := tinout.Load("testdata/htime.yaml")
+	DefaultTime = &then
+
+	result := spec.Check(func(tt *tinout.Test) bool {
+		f, l := Span(tt.I)
+		fs := "<nil>"
+		ls := "<nil>"
+		if f != nil {
+			fs = f.Format(FMT)
+		}
+		if l != nil {
+			ls = l.Format(FMT)
+		}
+		tt.Got = fmt.Sprintf("%v, %v", fs, ls)
+		return tt.Passing()
+	})
+	if result != nil {
+		t.Fatal(result.State())
+	}
 }
 
 func TestMinuteOf(t *testing.T) {

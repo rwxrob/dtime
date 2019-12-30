@@ -1,4 +1,4 @@
-package htime
+package dtime
 
 import "time"
 
@@ -21,74 +21,101 @@ type spanParser Peg {
   _e error
 }
 
-String
-  <- DateTime Offset? END
-  /  Offset           END
+DTime
 
-DateTime
+  <- Offset { p.start = *_deftime() }
 
-  <- "now" 
-     { p.start = *_deftime() }
-
-  /  Weekday                      # mon
+  /  Weekday Offset? END
      {
        p.start = *_deftime()
        mon := MondayOf(&p.start)
        p.start = mon.Add(time.Duration(p.wday) * time.Hour * 24)
      }
 
-  /  Month ![,1-9]                # jan
+  /  Month Offset? END
      {
        t := _deftime()
        m := time.Month(p.month)
        p.start = time.Date(t.Year(),m,1,0,0,0,0,t.Location())
      }
 
-  /  Time !','                    # 3p 304p 15 1504
+  /  Time Offset? END
      {
        t := *Today()
        p.start = time.Date(t.Year(),t.Month(),t.Day(),p.hour,p.min,0,0,t.Location())
      }
 
-  /  Time ',' Weekday !','        # 15,mon / 1504,mon / 304p,mon
+  /  Time ',' Weekday Offset? END
      {
        t := MondayOf(Today())
        day := t.Day() + p.wday
        p.start = time.Date(t.Year(),t.Month(),day,p.hour,p.min,0,0,t.Location())
      }
 
-  /  Month Day !','               # jan2
+  /  Time ',' Weekday ',' Year Offset?  END
+     {
+       t := MondayOf(Today())
+       day := t.Day() + p.wday
+       p.start = time.Date(p.year,t.Month(),day,p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Time ',' Month Offset? END
+     {
+       t := _deftime()
+       p.start = time.Date(t.Year(),time.Month(p.month),t.Day(),p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Time ',' Month ',' Year Offset? END
+     {
+       t := _deftime()
+       p.start = time.Date(t.Year(),time.Month(p.month),t.Day(),p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Time ',' Year Offset? END
+     {
+       t := _deftime()
+       p.start = time.Date(p.year,t.Month(),t.Day(),p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Weekday ',' Year Offset? END
+     {
+       t := _deftime()
+       day := MondayOf(t).Day() + p.wday
+       p.start = time.Date(p.year,t.Month(),day,p.hour,p.min,0,0,t.Location())
+     }
+
+  /  Month Day Offset? END
      {
        t := _deftime()
        p.start = time.Date(t.Year(),time.Month(p.month),p.day,0,0,0,0,t.Location())
      }
 
-  /  Time ',' Month Day !','      # 15,jan2 / 1504,jan2 / 304p,jan2
+  /  Time ',' Month Day Offset? END
      {
        t := _deftime()
        p.start = time.Date(t.Year(),time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
-  /  ',' Year                     # ,2006
+  /  ',' Year Offset? END
      {
        t := _deftime()
-       p.start = time.Date(t.Year(),1,1,0,0,0,0,t.Location())
+       p.start = time.Date(p.year,1,1,0,0,0,0,t.Location())
 
      }
 
-  /  Month ',' Year               # jan,2006
+  /  Month ',' Year Offset? END
      {
        t := _deftime()
        p.start = time.Date(p.year,time.Month(p.month),1,0,0,0,0,t.Location())
      }
 
-  /  Month Day ',' Year           # jan2,2006
+  /  Month Day ',' Year Offset? END
      {
        t := _deftime()
        p.start = time.Date(p.year,time.Month(p.month),p.day,0,0,0,0,t.Location())
      }
 
-  /  Time ',' Month Day ',' Year  # 15,jan2,2006 / 304p,jan2,2006
+  /  Time ',' Month Day ',' Year Offset? END
      {
        t := _deftime()
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
@@ -128,22 +155,25 @@ Day
      }
 
 Time
-  <- Hour                # 15
-  /  Hour12 AmPm         # 3p
-  /  Hour Minute         # 1504 
+  <- '12' "p" "m"?  {p.hour = 12}
+  /  '12' "a" "m"?  {p.hour = 0}
   /  Hour12 Minute AmPm  # 304p
+  /  Hour12 AmPm         # 3p
+  /  Hour Minute !AmPm   # 1504 
+  /  Hour !AmPm          # 15
 
 Hour
   <- (< [0-1] [0-9] >    # 00-19
-  /   < '2' [0-3]   >)   # 20-23
+  /  < '2' [0-3]   >     # 20-23
+  /  < [0-9]   >)        # 0-9
      {
        i, _ := strconv.Atoi(text)
        p.hour = i
      }
 
 Hour12
-  <- (< [1-9] >
-  /   < '1' [0-2] >)
+  <-  (< '1' [0-2] >
+  /   < [1-9] >)
      {
        i, _ := strconv.Atoi(text)
        p.hour = i
@@ -168,7 +198,7 @@ Year
      }
 
 Offset
-  <- OffDir OffYear?  OffWeek?  OffDay?  OffHour?  OffMinute?  OffSecond? WS?
+  <- OffDir OffYear?  OffWeek?  OffDay?  OffHour?  OffMinute?  OffSecond?
      { p.offset *= p.offdir }
 
 OffDir    <- '+' {p.offdir=1} / '-' {p.offdir=-1}
@@ -185,7 +215,5 @@ FLOAT
         f, _ := strconv.ParseFloat(text,64);
         p._float = f
      }
-
-WS <- ' '
 
 END <- !.

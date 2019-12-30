@@ -1,11 +1,11 @@
-// Package htime enables easy human input of times, dates, and durations. It
+// Package dtime enables easy human input of times, dates, and durations. It
 // also includes many convenience functions for rouding time duration
 // boundaries as is frequently needed for scheduling and time-based search
 // applications.
 //
 // Pointers to time.Time are used throughout the package since <nil> is usually
 // a more desirable zero value than that for time.Time without a pointer.  */
-package htime
+package dtime
 
 import (
 	"fmt"
@@ -52,16 +52,20 @@ func dump(i interface{}) {
 // specifying timezone, which falls out of the scope of this package. All times
 // are therefore assumed to be local. For a precise specification of the format
 // see the htime.peg file included with the package source code.
-func Span(s string) (*time.Time, *time.Time) {
+func Span(s string) (first *time.Time, last *time.Time) {
 	p := new(spanParser)
 	p.Buffer = s
 	p.Init()
 	p.Parse()
-	if p.offset == 0 {
-		return &p.start, nil
+	p.Execute()
+	if !p.start.IsZero() {
+		first = &p.start
 	}
-	t := p.start.Add(time.Duration(int64(p.offset)))
-	return &p.start, &t
+	if p.offset != 0 {
+		t := p.start.Add(time.Duration(int64(p.offset)))
+		last = &t
+	}
+	return
 }
 
 // MinuteOf returns the start of the given minute.
