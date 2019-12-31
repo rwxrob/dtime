@@ -1,12 +1,26 @@
-# Easy Date and Time Formats with Duration Spans
+# Easy Date/Time Formats with Duration Spans
 
 [![GoDoc](https://godoc.org/gitlab.com/skilstak/go/htime?status.svg)](https://godoc.org/gitlab.com/skilstak/go/htime)
 [![Go Report Card](https://goreportcard.com/badge/gitlab.com/skilstak/go/htime)](https://goreportcard.com/report/gitlab.com/skilstak/go/htime)
 [![Coverage](https://gocover.io/_badge/gitlab.com/skilstak/go/htime)](https://gocover.io/gitlab.com/skilstak/go/htime)
 
-Work in progress. Public for collaboration and education
+Returns one or two `*time.Time` pointers, one for the first second for given time, and a bounding second of the end of the duration (second after last second). This allows easy checks for give times within that duration.
 
-See the [PEG](grammar.peg) and [test data](testdata/dtime.yaml) for more examples and specifics.
+```
++20m
++1h
+-2.5d
+today
+yesterday
+tomorrow
+nextweek
+nextmonth
+lweek
+lmon
+lastyear+4w
+```
+
+See the [test data](testdata/dtime.yaml) for hundreds of examples and the [PEG grammar](grammar.peg) for specifics.
 
 ## Motivation
 
@@ -16,7 +30,7 @@ This also makes these time formats particularly useful to add to applications wi
 
 ## TODO
 
-* Add a `dtime` command (with tab completion).
+* Add the `dtime` command (with tab completion) to go with the package.
 
 ## See Also
 

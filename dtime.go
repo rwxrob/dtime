@@ -57,7 +57,7 @@ func Span(s string) (first *time.Time, last *time.Time) {
 	p.Buffer = s
 	p.Init()
 	p.Parse()
-	p.Execute()
+	// p.Execute() // no need with -inline
 	if !p.start.IsZero() {
 		first = &p.start
 	}
@@ -106,6 +106,20 @@ func YearOf(t *time.Time) *time.Time {
 // Today returns the start of the current date.
 func Today() *time.Time {
 	return DayOf(_deftime())
+}
+
+// Tomorrow returns the start of the next day.
+func Tomorrow() *time.Time {
+	t := *_deftime()
+	t = t.Add(time.Hour * 24)
+	return DayOf(&t)
+}
+
+// Yesterday returns the start of the previous day.
+func Yesterday() *time.Time {
+	t := *_deftime()
+	t = t.Add(time.Hour * -24)
+	return DayOf(&t)
 }
 
 // JanuaryOf returns the beginning of the first day of January of the given

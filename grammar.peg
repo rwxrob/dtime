@@ -136,24 +136,25 @@ DTime
 
   / ("tm" / "tom" "orrow"?) Offset END
     {
-      t := *Tomorrow()
+      p.start = *Tomorrow()
     }
 
   / ("tm" / "tom" "orrow"?) END
     {
-      t := *Tomorrow()
+      p.start = *Tomorrow()
       p.offset = DAY
     }
 
   / "y" ("est" "erday"?)? Offset END
     {
-      t := *Yesterday()
+      p.start = *Yesterday()
     }
 
   / "y" ("est" "erday"?)? END
     {
-      t := *Yesterday()
+      p.start = *Yesterday()
       p.offset = DAY
+      p.offdir = -1
     }
 
 Weekday
