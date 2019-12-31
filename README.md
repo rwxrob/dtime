@@ -3,6 +3,7 @@
 [![GoDoc](https://godoc.org/gitlab.com/skilstak/go/htime?status.svg)](https://godoc.org/gitlab.com/skilstak/go/htime)
 [![Go Report Card](https://goreportcard.com/badge/gitlab.com/skilstak/go/htime)](https://goreportcard.com/report/gitlab.com/skilstak/go/htime)
 [![Coverage](https://gocover.io/_badge/gitlab.com/skilstak/go/htime)](https://gocover.io/gitlab.com/skilstak/go/htime)
+![License](https://img.shields.io/github/license/robmuh/dtime)
 
 Returns one or two `*time.Time` pointers, one for the first second for given time, and a bounding second of the end of the duration (second after last second). This allows easy checks for give times within that duration.
 
