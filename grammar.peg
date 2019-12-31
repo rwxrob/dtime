@@ -5,6 +5,7 @@ import "time"
 type spanParser Peg {
 
   start time.Time
+  stop  time.Time
 
   offset float64 
   offdir float64
@@ -123,23 +124,23 @@ DTime
 
   / "now" Offset? END { p.start = *_deftime() }
 
-  / ("td" / "to" "day"?) Offset END
+  / ("td" / "to" "day"? / "thisd" "ay"?) Offset END
     {
       p.start = *Today()
     }
 
-  / ("td" / "to" "day"?)  END
+  / ("td" / "to" "day"? / "thisd" "ay"?)  END
     {
       p.start = *Today()
       p.offset = DAY
     }
 
-  / ("tm" / "tom" "orrow"?) Offset END
+  / ("tm" / "tom" "orrow"? / "t") Offset END
     {
       p.start = *Tomorrow()
     }
 
-  / ("tm" / "tom" "orrow"?) END
+  / ("tm" / "tom" "orrow"? / "t") END
     {
       p.start = *Tomorrow()
       p.offset = DAY
@@ -157,15 +158,26 @@ DTime
       p.offdir = -1
     }
 
-  / ("this" / '.') Offset END
+  / (('.' / "this") ("s" ("ec" "ond"?)?)?) Offset END
     {
       p.start = *_deftime()
     }
 
-  / ("this" / '.') END
+  / (('.' / "this") ("s" ("ec" "ond"?)?)?) END
     {
       p.start = *_deftime()
-      p.offset = SECOND
+      p.stop = p.start
+    }
+
+  / (('.' / "this") ("m" ("in" "ute"?)?)?) Offset END
+    {
+      p.start = *MinuteOf(_deftime())
+    }
+
+  / (('.' / "this") ("m" ("in" "ute"?)?)?) END
+    {
+      p.start = *MinuteOf(_deftime())
+      p.offset = MINUTE
     }
 
 Weekday

@@ -65,6 +65,9 @@ func Span(s string) (first *time.Time, last *time.Time) {
 		t := p.start.Add(time.Duration(int64(p.offset)))
 		last = &t
 	}
+	if !p.stop.IsZero() {
+		last = &p.stop
+	}
 	return
 }
 
