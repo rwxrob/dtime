@@ -1,2 +1,7 @@
+.SUFFIXES: .peg .go
+
 .peg.go:
-	peg $< $@
+	peg -noast -switch -inline -strict -output $@ $<
+
+all: grammar.go
+
