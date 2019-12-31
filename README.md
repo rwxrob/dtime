@@ -44,8 +44,6 @@ Mine started with emphasis on the least amount of typing possible and no spaces 
 
 Mine also comes with the `dtime` command for easy integration into shell scripts or while editing files with `vi/m` using "wand" syntax (`!!`,`!}`,`!G`}. 
 
-Mine also assumes weekdays refer to that of current week whether it be before or after the current date. So, for example, on Tuesday `mon` refers to the previous day, not the next Monday. (For that use `nextmon` or `nmon`.)
-
 I also focus mostly on time spans rather than specific dates.
 
 ### Andrew Snodgrass' PEG Golang Package

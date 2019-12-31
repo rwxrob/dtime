@@ -470,8 +470,6 @@ Sections  :
 
 - Name    : "Now"
   Tests   :
-  - I     : "." 
-    O     : "2020-05-13 14:34:54 -0500, <nil>"
   - I     : "now" 
     O     : "2020-05-13 14:34:54 -0500, <nil>"
   - I     : "now+30m" 
@@ -526,3 +524,13 @@ Sections  :
     O     : "2020-05-12 00:00:00 -0500, 2019-05-13 00:00:00 -0500"
   - I     : "yesterday+20m" 
     O     : "2020-05-12 00:00:00 -0500, 2020-05-12 00:20:00 -0500"
+
+- Name    : "This"
+  Notes   : "If duration not specified assumed to be end of interval."
+  Tests   :
+  - I     : "." 
+    O     : "2020-05-13 14:34:54 -0500, 2020-05-13 14:34:55 -0500"
+    N     : "this second, same as now but both"
+  - I     : "this" 
+    O     : "2020-05-13 14:34:54 -0500, 2020-05-13 14:34:55 -0500"
+    N     : "same as ."

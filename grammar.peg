@@ -121,7 +121,7 @@ DTime
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
-  / ("now" / '.') Offset? END { p.start = *_deftime() }
+  / "now" Offset? END { p.start = *_deftime() }
 
   / ("td" / "to" "day"?) Offset END
     {
@@ -155,6 +155,17 @@ DTime
       p.start = *Yesterday()
       p.offset = DAY
       p.offdir = -1
+    }
+
+  / ("this" / '.') Offset END
+    {
+      p.start = *_deftime()
+    }
+
+  / ("this" / '.') END
+    {
+      p.start = *_deftime()
+      p.offset = SECOND
     }
 
 Weekday
