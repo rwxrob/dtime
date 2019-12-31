@@ -573,3 +573,22 @@ Sections  :
   - I     : "thisd" 
     O     : "2020-05-13 00:00:00 -0500, 2020-05-14 00:00:00 -0500"
 
+- Name    : "This Week"
+- Name    : "This Month"
+- Name    : "This Year"
+
+- Name    : "Next Second"
+- Name    : "Next Minute"
+- Name    : "Next Hour"
+- Name    : "Next Day"
+- Name    : "Next Week"
+- Name    : "Next Month"
+- Name    : "Next Year"
+
+- Name    : "Last Second"
+- Name    : "Last Minute"
+- Name    : "Last Hour"
+- Name    : "Last Day"
+- Name    : "Last Week"
+- Name    : "Last Month"
+- Name    : "Last Year"
