@@ -121,10 +121,40 @@ DTime
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
-  / "now" Offset? END { p.start = *_deftime() }
+  / ("now" / '.') Offset? END { p.start = *_deftime() }
 
-  / "today" Offset? END { p.start = *Today() }
+  / ("td" / "to" "day"?) Offset END
+    {
+      p.start = *Today()
+    }
 
+  / ("td" / "to" "day"?)  END
+    {
+      p.start = *Today()
+      p.offset = DAY
+    }
+
+  / ("tm" / "tom" "orrow"?) Offset END
+    {
+      t := *Tomorrow()
+    }
+
+  / ("tm" / "tom" "orrow"?) END
+    {
+      t := *Tomorrow()
+      p.offset = DAY
+    }
+
+  / "y" ("est" "erday"?)? Offset END
+    {
+      t := *Yesterday()
+    }
+
+  / "y" ("est" "erday"?)? END
+    {
+      t := *Yesterday()
+      p.offset = DAY
+    }
 
 Weekday
   <- "mon" "day"?    {p.wday = 0}
