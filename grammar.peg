@@ -124,23 +124,23 @@ DTime
 
   / "now" Offset? END { p.start = *_deftime() }
 
-  / ("td" / "to" "day"? / "thisd" "ay"?) Offset END
+  / ("today" / ".d" "ay"?) Offset END
     {
       p.start = *Today()
     }
 
-  / ("td" / "to" "day"? / "thisd" "ay"?)  END
+  / ("today" / ".d" "ay"?)  END
     {
       p.start = *Today()
       p.offset = DAY
     }
 
-  / ("tm" / "tom" "orrow"? / "t") Offset END
+  / ("tom" "orrow"? / "t") Offset END
     {
       p.start = *Tomorrow()
     }
 
-  / ("tm" / "tom" "orrow"? / "t") END
+  / ("tom" "orrow"? / "t") END
     {
       p.start = *Tomorrow()
       p.offset = DAY
@@ -158,26 +158,38 @@ DTime
       p.offdir = -1
     }
 
-  / (('.' / "this") ("s" ("ec" "ond"?)?)?) Offset END
+  / ('.' ("s" ("ec" "ond"?)?)?) Offset END
     {
       p.start = *_deftime()
     }
 
-  / (('.' / "this") ("s" ("ec" "ond"?)?)?) END
+  / ('.' ("s" ("ec" "ond"?)?)?) END
     {
       p.start = *_deftime()
       p.stop = p.start
     }
 
-  / (('.' / "this") ("m" ("in" "ute"?)?)?) Offset END
+  / ('.' ("m" ("in" "ute"?)?)?) Offset END
     {
       p.start = *MinuteOf(_deftime())
     }
 
-  / (('.' / "this") ("m" ("in" "ute"?)?)?) END
+  / ('.' ("m" ("in" "ute"?)?)?) END
     {
       p.start = *MinuteOf(_deftime())
       p.offset = MINUTE
+    }
+
+  / ".h" ("r" / "hour")? Offset END
+    {
+      p.start = *HourOf(_deftime())
+      p.offset = HOUR
+    }
+
+  / ".h" ("r" / "hour")? END
+    {
+      p.start = *HourOf(_deftime())
+      p.offset = HOUR
     }
 
 Weekday

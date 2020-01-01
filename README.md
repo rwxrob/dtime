@@ -11,6 +11,7 @@ Returns one or two `*time.Time` pointers, one for the first second for given tim
 +20m
 +1h
 -2.5d
+.h
 today
 yesterday
 tomorrow
