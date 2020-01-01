@@ -122,98 +122,134 @@ DTime
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
-  / "now" Offset? END { p.start = *_deftime() }
+  / 'now' Offset? END { p.start = *_deftime() }
 
-  / ("today" / ".d" "ay"?) Offset END
+  / ('today' / '.d' 'ay'?) Offset END
     {
       p.start = *Today()
     }
 
-  / ("today" / ".d" "ay"?)  END
+  / ('today' / '.d' 'ay'?)  END
     {
       p.start = *Today()
       p.offset = DAY
     }
 
-  / ("tom" "orrow"? / "t") Offset END
+  / ('tom' 'orrow'? / 't') Offset END
     {
       p.start = *Tomorrow()
     }
 
-  / ("tom" "orrow"? / "t") END
+  / ('tom' 'orrow'? / 't') END
     {
       p.start = *Tomorrow()
       p.offset = DAY
     }
 
-  / "y" ("est" "erday"?)? Offset END
+  / 'y' ('est' 'erday'?)? Offset END
     {
       p.start = *Yesterday()
     }
 
-  / "y" ("est" "erday"?)? END
+  / 'y' ('est' 'erday'?)? END
     {
       p.start = *Yesterday()
       p.offset = DAY
       p.offdir = -1
     }
 
-  / ('.' ("s" ("ec" "ond"?)?)?) Offset END
+  / ('.' ('s' ('ec' 'ond'?)?)?) Offset END
     {
       p.start = *_deftime()
     }
 
-  / ('.' ("s" ("ec" "ond"?)?)?) END
+  / ('.' ('s' ('ec' 'ond'?)?)?) END
     {
       p.start = *_deftime()
       p.stop = p.start
     }
 
-  / ('.' ("m" ("in" "ute"?)?)?) Offset END
+  / ('.' ('m' ('in' 'ute'?)?)?) Offset END
     {
       p.start = *MinuteOf(_deftime())
     }
 
-  / ('.' ("m" ("in" "ute"?)?)?) END
+  / ('.' ('m' ('in' 'ute'?)?)?) END
     {
       p.start = *MinuteOf(_deftime())
       p.offset = MINUTE
     }
 
-  / ".h" ("r" / "hour")? Offset END
+  / '.h' ('r' / 'our')? Offset END
+    {
+      p.start = *HourOf(_deftime())
+    }
+
+  / '.h' ('r' / 'our')? END
     {
       p.start = *HourOf(_deftime())
       p.offset = HOUR
     }
 
-  / ".h" ("r" / "hour")? END
+  / '.w' ('k' / 'eek')? Offset END
     {
-      p.start = *HourOf(_deftime())
-      p.offset = HOUR
+      p.start = *WeekOf(_deftime())
+    }
+
+  / '.w' ('k' / 'eek')? END
+    {
+      p.start = *WeekOf(_deftime())
+      p.offset = WEEK
+    }
+
+  / ('.M' / '.month') Offset END
+    {
+      p.start = *MonthOf(_deftime())
+    }
+
+  / ('.M' / '.month') END
+    {
+      t := _deftime()
+      p.start = *MonthOf(t)
+      nm := t.Month() + 1  
+      p.stop = time.Date(t.Year(),nm,1,0,0,0,0,t.Location())
+    }
+
+  / ('.year' / '.yr' / '.y') Offset END
+    {
+      p.start = *YearOf(_deftime())
+    }
+
+  / ('.year' / '.yr' / '.y') END
+    {
+      t := _deftime()
+      p.start = *YearOf(t)
+      ny := t.Year() + 1  
+      p.stop = time.Date(ny,1,1,0,0,0,0,t.Location())
     }
 
 Weekday
-  <- "mon" "day"?    {p.wday = 0}
-  /  "tue" "sday"?   {p.wday = 1}
-  /  "wed" "nesday"? {p.wday = 2}
-  /  "thu" "rsday"?  {p.wday = 3}
-  /  "fri" "day"?    {p.wday = 4}
-  /  "sat" "urday"?  {p.wday = 5}
-  /  "sun" "day"?    {p.wday = 6}
+  <- 'mon' 'day'?    {p.wday = 0}
+  /  'tue' 'sday'?   {p.wday = 1}
+  /  'wed' 'nesday'? {p.wday = 2}
+  /  'thu' 'rsday'?  {p.wday = 3}
+  /  'fri' 'day'?    {p.wday = 4}
+  /  'sat' 'urday'?  {p.wday = 5}
+  /  'sun' 'day'?    {p.wday = 6}
 
 Month
-  <- "jan" "uary"?   {p.month = 1}
-  /  "feb" "ruary"?  {p.month = 2}
-  /  "mar" "ch"?     {p.month = 3}
-  /  "apr" "ril"?    {p.month = 4}
-  /  "may"           {p.month = 5}
-  /  "jun" "e"?      {p.month = 6}
-  /  "jul" "y"?      {p.month = 7}
-  /  "aug" "ust"?    {p.month = 8}
-  /  "sep" "tember"? {p.month = 9}
-  /  "oct" "tober"?  {p.month = 10}
-  /  "nov" "ember"?  {p.month = 11}
-  /  "dec" "ember"?  {p.month = 12}
+  <- 'jan' 'uary'?   {p.month = 1}
+  /  'feb' 'ruary'?  {p.month = 2}
+  /  'mar' 'ch'?     {p.month = 3}
+  /  'apr' 'ril'?    {p.month = 4}
+  /  'may'           {p.month = 5}
+  /  'jun' 'e'?      {p.month = 6}
+  /  'jul' 'y'?      {p.month = 7}
+  /  'aug' 'ust'?    {p.month = 8}
+  /  'sep' 'tember'? {p.month = 9}
+  /  'oct' 'tober'?  {p.month = 10}
+  /  'nov' 'ember'?  {p.month = 11}
+  /  'dec' 'ember'?  {p.month = 12}
 
 Day
   <- (< [1-9] ![0-9] >
@@ -251,8 +287,8 @@ Hour12
      }
 
 AmPm
-  <- "a" "m"? 
-  /  "p" "m"? {p.hour += 12}
+  <- 'a' 'm'? 
+  /  'p' 'm'? {p.hour += 12}
 
 Minute
   <- < [0-5] [0-9] >

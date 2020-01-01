@@ -52,5 +52,6 @@ I also focus mostly on time spans rather than specific dates.
 
 This [PEG package](https://github.com/pointlander/peg) is truly amazing. My days of writing ABNF are likely over.
 
+## Design Decisions
 
-
+* **Lowercase for all.** Since the primary motivation is efficiency both in inputting and parsing I decided to keep everything to lowercase which a few exceptions where uppercase has a different meaning.
