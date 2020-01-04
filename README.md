@@ -8,18 +8,19 @@
 Returns one or two `*time.Time` pointers, one for the first second for given time, and a bounding second of the end of the duration (second after last second). This allows easy checks for give times within that duration.
 
 ```
-+20m
-+1h
--2.5d
-.h
-today
-yesterday
-tomorrow
-nextweek
-nextmonth
-lweek
-lmon
-lastyear+4w
++20m  - in 20 minutes
++1h   - in an hour
+-2.5d - two and half days ago
+.h    - this hour 
+.d    - today (this day)
+t     - tomorrow 
+y     - yesterday
+ly    - last year
+nw    - next week
+nm    - next month
+lw    - last week
+lmon  - last monday
+ly+4w - last year for four weeks (24 days)
 ```
 
 See the [test data](testdata/dtime.yaml) for hundreds of examples and the [PEG grammar](grammar.peg) for specifics.
@@ -55,3 +56,5 @@ This [PEG package](https://github.com/pointlander/peg) is truly amazing. My days
 ## Design Decisions
 
 * **Lowercase for all.** Since the primary motivation is efficiency both in inputting and parsing I decided to keep everything to lowercase which a few exceptions where uppercase has a different meaning.
+
+* **Just one.** No need for more than one way to refer to things. Easier to memorize. 

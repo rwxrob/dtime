@@ -122,24 +122,12 @@ DTime
        p.start = time.Date(p.year,time.Month(p.month),p.day,p.hour,p.min,0,0,t.Location())
      }
 
-  / 'now' Offset? END { p.start = *_deftime() }
-
-  / ('today' / '.d' 'ay'?) Offset END
-    {
-      p.start = *Today()
-    }
-
-  / ('today' / '.d' 'ay'?)  END
-    {
-      p.start = *Today()
-      p.offset = DAY
-    }
-
-  / ('tom' 'orrow'? / 't') Offset END
-    {
-      p.start = *Tomorrow()
-    }
-
+  / '.'  END         { t:=*_deftime(); p.start, p.stop = t,t }
+  / '.m' Offset? END { p.start = *_deftime() }
+  / '.d' Offset END  { p.start = *Today() }
+  / '.d' END         { p.start = *Today(); p.offset = DAY }
+  / 't' Offset END   { p.start = *Tomorrow() }
+  / 't' END          { p.start = *Tomorrow() }
   / ('tom' 'orrow'? / 't') END
     {
       p.start = *Tomorrow()
