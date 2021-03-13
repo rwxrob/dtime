@@ -1,9 +1,11 @@
 # Easy Date/Time Formats with Duration Spans
 
 ![WIP](https://img.shields.io/badge/status-wip-red)
-[![GoDoc](https://godoc.org/github.com/robmuh/dtime?status.svg)](https://godoc.org/github.com/robmuh/dtime)
-[![Go Report Card](https://goreportcard.com/badge/github.com/robmuh/dtime)](https://goreportcard.com/report/github.com/robmuh/dtime)
-![License](https://img.shields.io/github/license/robmuh/dtime)
+[![GoDoc](https://godoc.org/github.com/rwxrob/dtime?status.svg)](https://godoc.org/github.com/rwxrob/dtime)
+[![License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)](LICENSE)
+[![Go Report
+Card](https://goreportcard.com/badge/github.com/rwxrob/dtime)](https://goreportcard.com/report/github.com/rwxrob/dtime)
+![License](https://img.shields.io/github/license/rwxrob/dtime)
 
 Returns one or two `*time.Time` pointers, one for the first second for given time, and a bounding second of the end of the duration (second after last second). This allows easy checks for give times within that duration.
 
