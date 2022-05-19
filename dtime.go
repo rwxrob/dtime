@@ -42,14 +42,14 @@ func dump(i interface{}) {
 // the string the second will be set. If no date and time are detected
 // DefaultTime or time.Now() is assumed.
 //
-// Spans the main function in this package and provides a minimal format for
+// Span is the main function in this package and provides a minimal format for
 // entering date and time information in a practical way. It's primary use case
 // is when a user needs to enter such data quickly and regularly from the
 // command line or into mobile and other devices where human input speed is
 // limited to what can be tapped out on the screen. The characters used in the
-// formatting only characters that appear on most default keyboards without
+// formatting are only characters that appear on most default keyboards without
 // shifting or switching to symbolic input. The package provides no method of
-// specifying timezone, which falls out of the scope of this package. All times
+// specifying a timezone, which falls out of the scope of this package. All times
 // are therefore assumed to be local. For a precise specification of the format
 // see the htime.peg file included with the package source code.
 func Span(s string) (first *time.Time, last *time.Time) {
