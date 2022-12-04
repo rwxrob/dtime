@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/robmuh/dtime"
+	"github.com/rwxrob/dtime"
 )
 
 const format = "2006-01-02 15:04 -0700"
