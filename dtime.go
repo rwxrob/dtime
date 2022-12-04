@@ -83,6 +83,12 @@ func HourOf(t *time.Time) *time.Time {
 	return &nt
 }
 
+// NextHourOf returns the start of the given hour.
+func NextHourOf(t *time.Time) *time.Time {
+	nt := time.Date(t.Year(), t.Month(), t.Day(), t.Hour()+1, 0, 0, 0, t.Location())
+	return &nt
+}
+
 // DayOf returns the start of the given day.
 func DayOf(t *time.Time) *time.Time {
 	nt := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
@@ -480,4 +486,14 @@ func SameTimeOnDayOfWeek(t *time.Time, day string) *time.Time {
 		return SameTimeOnSundayOf(t)
 	}
 	return nil
+}
+
+// Until takes a time and a function that takes a time and returns a time and
+// converts the result into a duration offset between them. Returns nil
+// if unable to determine. This is useful when a duration is needed for
+// any of the functions in this package that match that signature. The
+// duration is positive or negative depending on the relation between
+// the times.
+func Until(fn func(*time.Time) *time.Time, t *time.Time) time.Duration {
+	return (*(fn(t))).Sub(*t)
 }

@@ -74,3 +74,15 @@ func ExampleYearOf() {
 	// Output:
 	// 2020-01-01 00:00:00 -0500 -0500
 }
+
+/*
+func ExampleUntil() {
+
+	now := time.Now().Add(1 * time.Hour)
+	fmt.Println(dtime.Until(dtime.NextHourOf, &now))
+
+	// Output:
+	// ignored
+
+}
+*/
